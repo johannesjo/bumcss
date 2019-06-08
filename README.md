@@ -2,7 +2,7 @@
 *Best Utility Modularization CSS -  for the lazy and pragmatic* 
 
 <p align="center">
-  <img width="460" height="300" src="bumcss-logo.svg">
+  <img width="460" height="300" src="bumcss-logo-with-text.svg">
 </p>
 
 bumcss is a (S)CSS methodology of writing (mostly) semantic, scalable and maintainable CSS that aims to avoid classitis, or in other words at a most expressive html, with least amount of code to write. The approach is specifically useful when developing Single Page Applications using JavaScript frameworks such as Vue.js, React or Angular or web components, where getting a quick grasp on what's happening is most important for development, but it can be also used for classic web pages.
