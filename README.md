@@ -5,9 +5,9 @@
   <img width="460" height="300" src="bumcss-logo-with-text.svg">
 </p>
 
-bumcss is a (S)CSS methodology of writing (mostly) semantic, scalable and maintainable CSS that aims to avoid classitis, or in other words at a most expressive html, with least amount of code to write. The approach is specifically useful when developing Single Page Applications using JavaScript frameworks such as Vue.js, React or Angular or web components, where getting a quick grasp on what's happening is most important for development, but it can be also used for classic web pages.
+bumcss is a [(S)CSS](https://sass-lang.com/) methodology of writing (mostly) [semantic](https://alistapart.com/article/meaningful-css-style-like-you-mean-it/), scalable and maintainable CSS that aims to avoid [classitis](https://www.steveworkman.com/html5-2/standards/2009/classitis-the-new-css-disease/), or in other words it aims at *the most expressive semantic html*, with least amount of code to write. The approach is specifically useful when developing Single Page Applications using JavaScript frameworks such as Vue.js, React or Angular or web components, where getting a quick grasp on what's happening is most important for development, but it can be also used for classic web pages.
 
-bumcss It's inspired by BEM and SMACSS, which in the old days, when spaghetti CSS was a legitimate strategy, were quite the big improvement. Both approaches require you to assign a lot of classes. Too much code in my humble opinion which potentially not only slows down loading times, but more importantly increases development time and makes the code less readable, because there is simply so much more of it.
+bumcss It's inspired by [BEM](http://getbem.com) and [SMACSS](http://smacss.com). The problem with both approaches is that they require you to assign a lot of classes. Too much code in my humble opinion which potentially not only slows down loading times, but more importantly increases development time and makes the code less readable, because there is simply so much more of it.
 
 ### Very basic example
 ```html
@@ -21,13 +21,17 @@ bumcss It's inspired by BEM and SMACSS, which in the old days, when spaghetti CS
     display: inline-block;
     border: 1px solid gray;
     padding: 5px;
+    
+    @media(min-width: 780px) {
+      padding: 10px;
+    }
 
     &:hover {
       border-color: black;
     }
 
     // variant styles
-    &.blue {
+    &._blue {
       background: blue;
       color: #fff;
       
@@ -40,11 +44,11 @@ bumcss It's inspired by BEM and SMACSS, which in the old days, when spaghetti CS
 ```
 
 ## UI Components, Wrapper Components and Default Styles
-A typical application has three types of elements.
+Let's start with the very basics. A typical application will - for the most past - have three types of elements.
 
-**Global Default Styles** for elements such as tables, links, headings, paragraphs, strong, etc. They should be imported first so they can be easily overwritten if needed.
+**Global Default Styles** for basic elements such as tables, links, headings, paragraphs, strong, etc. They should be imported first so they can be easily overwritten if needed. Having well designed foundation of base styles and limiting yourself to fixed set of e.g. heading styles, will save you a lot of work in the long run.
 
-**Wrapper Components/Logical Components** such as pages, or logical sections, let's say a product info component or a shopping cart. Always block elements in the spirit of BEM.
+**Wrapper Components/Logical Components** such as pages, or logical sections, let's say a or a shopping cart or a map component. Always block elements in the spirit of BEM. In a single page application those components will likely be [the place to distribute data throughout your UI Components](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0).
 
 **UI Components** such as a button, tabs or an accordion and so on. They only should have presentational logic and can be block elements, as well as inline elements.
 
@@ -56,7 +60,7 @@ The fundamental principle of bumcss is that all styles belonging to element shou
 
 Some Code says more than 100 lines of theory. So here is some practical example: 
 ```html
-<button class="btn blue-variant">
+<button class="btn _blue-variant">
   <span>hello</span>
   <icon>fish</icon>
 </button>
@@ -65,8 +69,8 @@ Some Code says more than 100 lines of theory. So here is some practical example:
 ```scss
 .btn {
     /* Different states & variants of the element itself */
-    // NOTE: variant names should always be adjectives while element names (e.g. btn) should never be
-    &.blue-variant {}
+    // NOTE: variant names should either always be adjectives (while element names, e.g. btn, should never be) or they should have a prefix like "_"
+    &._blue-variant {}
     // camel cased and usually prefixed with "is" or "has" to distinguish them visually
     &.isVisible {}
     // pseudo states
@@ -74,7 +78,7 @@ Some Code says more than 100 lines of theory. So here is some practical example:
     
     // parent modifiers, used for themes or for parent states & variants 
     .global-theme-class & {}
-    .parent.variant & {}
+    .parent._variant & {}
     .parent.isExpanded & {}
 
     // pseudo selectors    
@@ -98,7 +102,7 @@ Some Code says more than 100 lines of theory. So here is some practical example:
     span {
       font-size: 20px;
     }
-    &.variant span {}
+    &._variant span {}
     &.isVisible span {}
   
     // sub ui elements which are only positioned or shown/hidden, 
@@ -107,22 +111,24 @@ Some Code says more than 100 lines of theory. So here is some practical example:
         position: absolute;
         right: 10px;
     }
-    &.blue-variant .icon {}
+    &._blue-variant .icon {}
     &.isVisible .icon {}
 }
 ```
 
 ## CSS Specificity: Complex Component Example
-For more info on CSS specifity have a look [here](http://cssspecificity.com/) and [here](https://specificity.keegan.st/).
+One of the main arguments for BEM is, that by using only a single class everywhere you won't run into problems where you need to go deeper and deeper to overwrite a style property (For more info on CSS specificity have a look [here](http://cssspecificity.com/) and [here](https://specificity.keegan.st/)). Let's explore how specificity will look like in a bumcss component.
+
+
 ```html
 <tabs>
-  <tab class="big">
+  <tab class="_big">
     <tab-heading>heading <icon>fish</icon></tab-heading>
     <tab-content></tab-content>
   </tab>
-  <tab class="blue">
-    <tab-heading class="funny">heading <icon>icon</icon></tab-heading>
-    <tab-content class="boxed"></tab-content>
+  <tab class="_blue">
+    <tab-heading class="_funny">heading <icon>icon</icon></tab-heading>
+    <tab-content class="_boxed"></tab-content>
   </tab>
 </tabs>
 ```
@@ -142,13 +148,13 @@ tab {
   }
   
   // variant S011
-  &.blue {
+  &._blue {
     // variant + state S021
     &.isActive{}
   }
 
   // variant S011
-  &.big {
+  &._big {
     // variant + state S021
     &.isActive{
 
@@ -175,7 +181,7 @@ tab-heading {
   }
   
   // parent variant S012
-  tab.big & {
+  tab._big & {
     font-size: 20px;
     
     // every sub element and variant gets its own media query
@@ -207,16 +213,15 @@ tab-content {
 }
 ```
 
-### Specificity
-You can see that specificity and conflicting styles are not a problem most of the time if you stick to the described pattern. The only exceptions are the "parent variant" & the "parent parent variants" and "variants" vs "states". It's up to you, what you think, should have prevalence. 
+As you can see that specificity and conflicting styles are not a problem most of the time if you stick to the described pattern. The only exceptions are the "parent variant" & the "parent parent variants" and "variants" vs "states". It's up to you, what you think, should have prevalence. 
 
 #### Variants vs States
-Personally I think it's nicer to write states first, because they are closer related the the default main element while variants could be considered a new variant of the same element. On the other hand I think that states also should have prevalence over variants. Most of the time this shouldn't be a problem, as states are more likely to focus on transforms and visibility, or in other words, what a component does on the page, while variants are more likely to focus on properties that change the general appearance such as font-sizes, colors, borders and box-shadows.
+Personally I think it's nicer to write states first, because they are closer related the the default main element while variants could be considered more of a new instance of the same element. On the other hand I think that states normally should have prevalence over variants. Most of the time this shouldn't be a problem, as states are more likely to focus on transforms and visibility, or in other words, what a component does on the page, while variants are more likely to focus on properties that change the general appearance such as font-sizes, colors, borders and box-shadows.
 
-Having them so closely written together, should help you quickly identifying possible conflicts and if you think that a state should have prevalence over a variant in any case, it's probably ok to use `!important` for something like `el.isHidden {display: none !important;}`, as you are likely to want to apply `display: none` a 100% of the time.
+Having them so closely written together, should help you quickly identifying possible conflicts and if you think that a state should have prevalence over a variant in any case, it's probably ok to use `!important` for something like `el.isHidden {display: none !important;}`, as you are likely to want to apply `display: none` a 100% of the time (but only do this if you're sure it is really a 100%).
 
 #### Parent Parent States/Variants vs. Parent States/States Variants
-Probably not a problem most of the time, as it's unlikely too have many combinations of those. But as with with "Variants vs. States" writing them closely together, should help you to quickly identify problematic areas and order them accordingly.
+Probably not a problems most of the time, as it's unlikely too have many combinations of those. But as with with "Variants vs. States" writing them closely together, should help you to quickly identify problematic areas and order them accordingly if needed.
 
 ## Wrapper/Logical Component example
 ```html
@@ -226,33 +231,37 @@ Probably not a problem most of the time, as it's unlikely too have many combinat
     </header>
     
     <section class="product-info">
-      <h2 class="fancy">Product Info</h2>
+      <h2 class="_fancy">Product Info</h2>
       <tabs>
-        <tab class="big">
+        <tab class="_big">
           <tab-heading>heading <icon>fish</icon></tab-heading>
-          <tab-content></tab-content>
+          <tab-content>
+            <div class="product-description">
+            ...
+            </div>
+            <button>Buy</button>
+          </tab-content>
         </tab>
-        <tab class="blue">
-          <tab-heading class="funny">heading <icon>icon</icon></tab-heading>
-          <tab-content class="boxed"></tab-content>
+        <tab class="_blue">
+          <tab-heading class="_funny">heading <icon>icon</icon></tab-heading>
+          <tab-content class="_boxed"></tab-content>
         </tab>
       </tabs>
     </section>
 </div>
-
 ```
 ```scss
 // global default styles in their own file(s)
 // should be included first so they can be overwritten
 h2 {
   // S 011
-  .fancy {
+  ._fancy {
     // ...
   }
   
   // DON'T DO THIS 
   // Global default styles should be applied regardless of context
-  header &.fancy{
+  header &._fancy{
   }
 }
 ```
