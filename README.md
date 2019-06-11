@@ -5,9 +5,9 @@
   <img width="460" height="300" src="bumcss-logo-with-text.svg">
 </p>
 
-bumcss is a [(S)CSS](https://sass-lang.com/) methodology of writing (mostly) [semantic](https://alistapart.com/article/meaningful-css-style-like-you-mean-it/), scalable and maintainable CSS that aims to avoid [classitis](https://www.steveworkman.com/html5-2/standards/2009/classitis-the-new-css-disease/), or in other words it aims at *the most expressive semantic html*, with least amount of code to write. The approach is specifically useful when developing Single Page Applications using JavaScript frameworks such as Vue.js, React or Angular or web components, where getting a quick grasp on what's happening is most important for development, but it can be also used for classic web pages.
+bumcss is a [(S)CSS](https://sass-lang.com/) methodology of writing (mostly) [semantic](https://alistapart.com/article/meaningful-css-style-like-you-mean-it/), scalable and maintainable CSS that aims at *the most expressive semantic html*, with least amount of code to write. The approach is specifically useful when developing Single Page Applications using JavaScript frameworks such as Vue.js, React or Angular or web components, where getting a quick grasp on what's happening is most important for development, but it can be also used for classic web pages.
 
-bumcss It's inspired by [BEM](http://getbem.com) and [SMACSS](http://smacss.com). The problem with both approaches is that they require you to assign a lot of classes. Too much code in my humble opinion which potentially not only slows down loading times, but more importantly increases development time and makes the code less readable, because there is simply so much more of it.
+bumcss It's inspired by [BEM](http://getbem.com) and [SMACSS](http://smacss.com). The problem with both approaches is that they require you to assign a lot of classes (aka [classitis](https://www.steveworkman.com/html5-2/standards/2009/classitis-the-new-css-disease/)). Too much code in my humble opinion which potentially not only slows down loading times, but more importantly increases development time and makes the code less readable, because there is simply so much more of it.
 
 ### Very basic example
 ```html
@@ -193,7 +193,8 @@ tab-heading {
     margin: 5px;
     
     // parent variant S013
-    @at-root tab-heading.funny &{
+    // a bit ugly, but probably not needed very often
+    @at-root tab-heading.funny & {
       transform: scale(2) rotate(13deg);
     }
     
@@ -226,7 +227,7 @@ Probably not a problems most of the time, as it's unlikely too have many combina
 ## Wrapper/Logical Component example
 ```html
 <div class="product">
-    <header class="product-header">
+    <header>
       <h1>Product Header</h1>
     </header>
     
@@ -236,15 +237,22 @@ Probably not a problems most of the time, as it's unlikely too have many combina
         <tab class="_big">
           <tab-heading>heading <icon>fish</icon></tab-heading>
           <tab-content>
+            <h2>Description</h2>
             <div class="product-description">
-            ...
+              <p>...</p>
+              <p>...</p>
             </div>
             <button>Buy</button>
           </tab-content>
         </tab>
         <tab class="_blue">
           <tab-heading class="_funny">heading <icon>icon</icon></tab-heading>
-          <tab-content class="_boxed"></tab-content>
+          <tab-content class="_boxed">
+            <h2>Features</h2>
+            <ul class="features">
+              <li>...</li>
+            </ul>
+          </tab-content>
         </tab>
       </tabs>
     </section>
@@ -298,20 +306,28 @@ This depends strongly on if and which JavaScript framework you use. But general 
     * inputs
     * buttons
     * links
+    * (optional) a folder where you put the css files of libraries or overwrites of those styles
 * you normally shouldn't have to overwrite those global styles too often. If you do that's a strong sign that things are messily designed in the first place. So go and talk to your designer! ;)
 * grouping files by component is preferable to grouping files by type
 * global default styles should be imported first, so they can be overwritten
 
 ## General Tips and Tricks
-* having a consistent system for vertical margins helps. Use scss variables or mixins.
-* use variables or mixins for different font styles, but prefer using the default tags e.g. h1, h2, p, strong, table, etcs. where possible
-* having a good system for the base styles will save you a lot of code
+* Having a consistent system for vertical margins helps. Use scss variables or mixins.
+* Use variables or mixins for different font styles, but prefer using the default tags e.g. h1, h2, p, strong, table, etcs. where possible
+* Having a good system for the base styles will save you a lot of code
+* Get in the habit of extracting ui components when you recognize a pattern very often, but also don't overdo it. If you find yourself with a button component with 50 different variants, chances are that something went wrong.
+* Talk to your designer if you recognize inconsistencies you don't understand. Chances are they are not there on purpose.
 
-## Grids
+### Grids
 Grid utility classes are handy in my opinion while you give a quick indication on what's going on. Not semantic maybe but practical, so it's totally fine to use them.
 
-## A word on utility classes
-Personally not the biggest fan, but if you feel, it's very useful for your particular case, let's say for vertical margins, then use them. But if you do so, be consistent. Mixing multiple approaches can lead to chaos.  
+### A word on utility classes
+Personally not the biggest fan and I would recommend a healthy bit of scepticism, but if you feel, it's very useful for your particular case, let's say for vertical margins or different font styles and sizes then use them. But if you do so, be consistent. Mixing multiple approaches can lead to chaos.  
 
-## Global Box Sizing
+### Global Box Sizing
 Yes, please!
+
+<!--
+## Adjustments to approach when all css classes are global
+Use BEM sub element classes like `.product__info, .product__description, .product__features`
+-->
