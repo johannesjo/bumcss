@@ -43,6 +43,9 @@ bumcss It's inspired by [BEM](http://getbem.com) and [SMACSS](http://smacss.com)
 }
 ```
 
+## Why conventions are important (even for css)
+A lot has been [written](https://www.multidots.com/importance-of-code-quality-and-coding-standard-in-software-development/) [on](https://medium.com/@marksiu/why-naming-convention-is-a-must-for-your-development-team-628188f392d5) [that](https://www.google.com/search?q=why+conventions+are+important+in+software+development&oq=why+conventions+are+important+in+software+development&aqs=chrome..69i57.11723j0j7&sourceid=chrome&ie=UTF-8). They are! And (S)CSS has been traiditionally the place where there are neglected the most.
+
 ## UI Components, Wrapper Components and Default Styles
 Let's start with the very basics. A typical application will - for the most past - have three types of elements.
 
