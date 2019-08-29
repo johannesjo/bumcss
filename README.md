@@ -10,7 +10,7 @@ bumcss is a [(S)CSS](https://sass-lang.com/) methodology of writing (mostly) [se
 bumcss It's inspired by [BEM](http://getbem.com) and [SMACSS](http://smacss.com). The problem with both approaches is that they require you to assign a lot of classes (aka [classitis](https://www.steveworkman.com/html5-2/standards/2009/classitis-the-new-css-disease/)). Too much code in my humble opinion which potentially not only slows down loading times, but more importantly increases development time and makes the code less readable, because there is simply so much more of it.
 
 ## Why conventions are so important
-A lot has been [written](https://www.multidots.com/importance-of-code-quality-and-coding-standard-in-software-development/) [on](https://medium.com/@marksiu/why-naming-convention-is-a-must-for-your-development-team-628188f392d5) [that](https://www.google.com/search?q=why+conventions+are+important+in+software+development&oq=why+conventions+are+important+in+software+development&aqs=chrome..69i57.11723j0j7&sourceid=chrome&ie=UTF-8). They are! And (S)CSS has been traiditionally the place where there are neglected the most.
+A lot has been [written](https://www.multidots.com/importance-of-code-quality-and-coding-standard-in-software-development/) [on](https://medium.com/@marksiu/why-naming-convention-is-a-must-for-your-development-team-628188f392d5) [that](https://www.google.com/search?q=why+conventions+are+important+in+software+development&oq=why+conventions+are+important+in+software+development&aqs=chrome..69i57.11723j0j7&sourceid=chrome&ie=UTF-8). They are! And (S)CSS has been traditionally the place where there are neglected the most.
 
 ## Very basic example
 ```html
