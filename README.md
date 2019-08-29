@@ -1,5 +1,5 @@
-# bumcss (wip)
-*Best Utility Modularization CSS -  for the lazy and pragmatic* 
+<h1 align="center">bumcss (wip)</h1>
+<p align="center"<i>Best Utility Modularization CSS -  for the lazy and pragmatic</i></p>
 
 <p align="center">
   <img width="460" height="300" src="bumcss-logo-with-text.svg">
