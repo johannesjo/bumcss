@@ -5,6 +5,7 @@
   <img width="460" height="300" src="bumcss-logo-with-text.svg">
 </p>
 
+## Introduction
 bumcss is a [(S)CSS](https://sass-lang.com/) methodology of writing (mostly) [semantic](https://alistapart.com/article/meaningful-css-style-like-you-mean-it/), scalable and maintainable CSS that aims at *the most expressive semantic html*, with least amount of code to write. The approach is specifically useful when developing Single Page Applications using JavaScript frameworks such as Vue.js, React or Angular or web components, where getting a quick grasp on what's happening is most important for development, but it can be also used for classic web pages.
 
 bumcss It's inspired by [BEM](http://getbem.com) and [SMACSS](http://smacss.com). The problem with both approaches is that they require you to assign a lot of classes (aka [classitis](https://www.steveworkman.com/html5-2/standards/2009/classitis-the-new-css-disease/)). Too much code in my humble opinion which potentially not only slows down loading times, but more importantly increases development time and makes the code less readable, because there is simply so much more of it.
@@ -14,7 +15,7 @@ A lot has been [written](https://www.multidots.com/importance-of-code-quality-an
 
 ## Very basic example
 ```html
-<button class="btn _emphasized">
+<button class="btn _primary">
   Hello
 </button>
 ```
@@ -24,7 +25,7 @@ A lot has been [written](https://www.multidots.com/importance-of-code-quality-an
     display: inline-block;
     border: 1px solid gray;
     padding: 5px;
-    
+
     @media(min-width: 780px) {
       padding: 10px;
     }
@@ -34,10 +35,10 @@ A lot has been [written](https://www.multidots.com/importance-of-code-quality-an
     }
 
     // variant styles
-    &._emphasized {
+    &._primary {
       background: blue;
       color: #fff;
-      
+
       &:hover {
         background: lightblue;
         color: black;
@@ -56,14 +57,14 @@ Let's start with the very basics. A typical application will - for the most past
 **UI Components** such as a button, tabs or an accordion and so on. They only should have presentational logic and can be block elements, as well as inline elements.
 
 ### In the spirit of block, element, modifier
-Almost all of your ui components should be responsive. You should be able to place them in different sizes of responsive and non-responsive containers, without breaking their styles. 
+Almost all of your ui components should be responsive. You should be able to place them in different sizes of responsive and non-responsive containers, without breaking their styles.
 
 ## Order of styles: Simple UI Component Example
-The fundamental principle of bumcss is that all styles belonging to element should be grouped as closely together as possible. 
+The fundamental principle of bumcss is that all styles belonging to element should be grouped as closely together as possible.
 
-Some Code says more than 100 lines of theory. So here is some practical example: 
+Some Code says more than 100 lines of theory. So here is some practical example:
 ```html
-<button class="btn _blue-variant">
+<button class="btn _primary-variant">
   <span>hello</span>
   <icon>fish</icon>
 </button>
@@ -73,18 +74,18 @@ Some Code says more than 100 lines of theory. So here is some practical example:
 .btn {
     /* Different states & variants of the element itself */
     // NOTE: variant names should either always be adjectives (while element names, e.g. btn, should never be) or they should have a prefix like "_"
-    &._blue-variant {}
+    &._primary-variant {}
     // camel cased and usually prefixed with "is" or "has" to distinguish them visually
     &.isVisible {}
     // pseudo states
     &:hover {}
-    
-    // parent modifiers, used for themes or for parent states & variants 
+
+    // parent modifiers, used for themes or for parent states & variants
     .global-theme-class & {}
     .parent._variant & {}
     .parent.isExpanded & {}
 
-    // pseudo selectors    
+    // pseudo selectors
     &:first-child {}
 
     // sibling selectors (probably rarely used)
@@ -94,27 +95,27 @@ Some Code says more than 100 lines of theory. So here is some practical example:
     /* Sub element selectors
     While these should normally be avoided, there are two exceptions:
     1. Child elements and pseudo elements that usually don't have any styling on them.
-    2. Positioning of global ui elements of global ui components and default elements. 
-    This is fine, because they normally should not have any positioning in the 
+    2. Positioning of global ui elements of global ui components and default elements.
+    This is fine, because they normally should not have any positioning in the
     first place or can be easily overwritten in the case of default styles.*/
 
     // pseudo elements
     &:after {}
-  
+
     // normally unstyled sub elements
     span {
       font-size: 20px;
     }
     &._variant span {}
     &.isVisible span {}
-  
-    // sub ui elements which are only positioned or shown/hidden, 
+
+    // sub ui elements which are only positioned or shown/hidden,
     // e.g. margin, position, left, top, right, bottom, display, visibility, flex
     icon {
         position: absolute;
         right: 10px;
     }
-    &._blue-variant .icon {}
+    &._primary-variant .icon {}
     &.isVisible .icon {}
 }
 ```
@@ -125,12 +126,12 @@ One of the main arguments for BEM is, that by using only a single class everywhe
 
 ```html
 <tabs>
-  <tab class="_big">
+  <tab class="_hero">
     <tab-heading>heading <icon>fish</icon></tab-heading>
     <tab-content></tab-content>
   </tab>
-  <tab class="_blue">
-    <tab-heading class="_funny">heading <icon>icon</icon></tab-heading>
+  <tab class="_accented">
+    <tab-heading class="_emphasized">heading <icon>icon</icon></tab-heading>
     <tab-content class="_boxed"></tab-content>
   </tab>
 </tabs>
@@ -146,18 +147,18 @@ tabs {
 
 // el S001
 tab {
-  // states S011 
+  // states S011
   &.isActive {
   }
-  
+
   // variant S011
-  &._blue {
+  &._accented {
     // variant + state S021
     &.isActive{}
   }
 
   // variant S011
-  &._big {
+  &._hero {
     // variant + state S021
     &.isActive{
 
@@ -176,31 +177,31 @@ tab-heading {
   // parent state S012
   tab.isActive & {
     color: red;
-    
+
     // parent state + state S021
     &:hover {
       color: darkred;
     }
   }
-  
+
   // parent variant S012
-  tab._big & {
+  tab._hero & {
     font-size: 20px;
-    
+
     // every sub element and variant gets its own media query
     @media (max-width: $screen-xs) {}
   }
-  
+
   // child el S 002
   icon {
     margin: 5px;
-    
+
     // parent variant S013
     // a bit ugly, but probably not needed very often
-    @at-root tab-heading.funny & {
+    @at-root tab-heading._emphasized & {
       transform: scale(2) rotate(13deg);
     }
-    
+
     // parent parent state S013
     tab.isActive & {
       transform: rotate(360deg);
@@ -212,12 +213,12 @@ tab-heading {
 tab-content {
   // parent state S012
   tab.isActive & {}
-  
+
   // ...
 }
 ```
 
-As you can see that specificity and conflicting styles are not a problem most of the time if you stick to the described pattern. The only exceptions are the "parent variant" & the "parent parent variants" and "variants" vs "states". It's up to you, what you think, should have prevalence. 
+As you can see that specificity and conflicting styles are not a problem most of the time if you stick to the described pattern. The only exceptions are the "parent variant" & the "parent parent variants" and "variants" vs "states". It's up to you, what you think, should have prevalence.
 
 #### Variants vs States
 Personally I think it's nicer to write states first, because they are closer related the the default main element while variants could be considered more of a new instance of the same element. On the other hand I think that states normally should have prevalence over variants. Most of the time this shouldn't be a problem, as states are more likely to focus on transforms and visibility, or in other words, what a component does on the page, while variants are more likely to focus on properties that change the general appearance such as font-sizes, colors, borders and box-shadows.
@@ -233,11 +234,11 @@ Probably not a problems most of the time, as it's unlikely too have many combina
     <header>
       <h1>Product Header</h1>
     </header>
-    
+
     <section class="product-info">
       <h2 class="_fancy">Product Info</h2>
       <tabs>
-        <tab class="_big">
+        <tab class="_hero">
           <tab-heading>heading <icon>fish</icon></tab-heading>
           <tab-content>
             <h2>Description</h2>
@@ -248,8 +249,8 @@ Probably not a problems most of the time, as it's unlikely too have many combina
             <button>Buy</button>
           </tab-content>
         </tab>
-        <tab class="_blue">
-          <tab-heading class="_funny">heading <icon>icon</icon></tab-heading>
+        <tab class="_accented">
+          <tab-heading class="_emphasized">heading <icon>icon</icon></tab-heading>
           <tab-content class="_boxed">
             <h2>Features</h2>
             <ul class="features">
@@ -269,8 +270,8 @@ h2 {
   ._fancy {
     // ...
   }
-  
-  // DON'T DO THIS 
+
+  // DON'T DO THIS
   // Global default styles should be applied regardless of context
   header &._fancy{
   }
@@ -286,9 +287,9 @@ h2 {
     margin-top: 0;
     margin-bottom: 20px;
   }
-  
+
   tabs {
-    margin-top: 30px;    
+    margin-top: 30px;
   }
   // DON'T DO THIS
   // this probably better done inside the file for the tabs as a variant
@@ -325,12 +326,9 @@ This depends strongly on if and which JavaScript framework you use. But general 
 Grid utility classes are handy in my opinion while you give a quick indication on what's going on. Not semantic maybe but practical, so it's totally fine to use them.
 
 ### A word on utility classes
-Personally not the biggest fan and I would recommend a healthy bit of scepticism, but if you feel, it's very useful for your particular case, let's say for vertical margins or different font styles and sizes then use them. But if you do so, be consistent. Mixing multiple approaches can lead to chaos.  
+Personally not the biggest fan and I would recommend a healthy bit of scepticism, but if you feel, it's very useful for your particular case, let's say for vertical margins or different font styles and sizes then use them. But if you do so, be consistent. Mixing multiple approaches can lead to chaos.
 
 ### Global Box Sizing
 Yes, please!
 
-<!--
-## Adjustments to approach when all css classes are global
-Use BEM sub element classes like `.product__info, .product__description, .product__features`
--->
+
