@@ -8,7 +8,7 @@
 ## Introduction
 bumcss is a [(S)CSS](https://sass-lang.com/) methodology of writing (mostly) [semantic](https://alistapart.com/article/meaningful-css-style-like-you-mean-it/), scalable and maintainable CSS that aims at *the most expressive semantic html*, with least amount of code to write. The approach is specifically useful when developing Single Page Applications using JavaScript frameworks such as Vue.js, React or Angular or web components, where getting a quick grasp on what's happening is most important for development, but it can be also used for classic web pages.
 
-bumcss It's inspired by [BEM](http://getbem.com) and [SMACSS](http://smacss.com). The problem with both approaches is that they require you to assign a lot of classes (aka [classitis](https://www.steveworkman.com/html5-2/standards/2009/classitis-the-new-css-disease/)). Too much code in my humble opinion which potentially not only slows down loading times, but more importantly increases development time and makes the code less readable, because there is simply so much more of it.
+bumcss It's inspired by [BEM](http://getbem.com), [SMACSS](http://smacss.com) and [ITCSS](https://www.creativebloq.com/web-design/manage-large-css-projects-itcss-101517528). The problem with all three approaches is that they require you to assign a lot of classes (aka [classitis](https://www.steveworkman.com/html5-2/standards/2009/classitis-the-new-css-disease/)) which tend to have long names. Too much code in my humble opinion which potentially not only slows down loading times, but more importantly increases development time and makes the code less readable, because there is simply so much more of it.
 
 ## Why conventions are so important
 A lot has been [written](https://www.multidots.com/importance-of-code-quality-and-coding-standard-in-software-development/) [on](https://medium.com/@marksiu/why-naming-convention-is-a-must-for-your-development-team-628188f392d5) [that](https://www.google.com/search?q=why+conventions+are+important+in+software+development&oq=why+conventions+are+important+in+software+development&aqs=chrome..69i57.11723j0j7&sourceid=chrome&ie=UTF-8). They are! And (S)CSS has been traditionally the place where there are neglected the most.
@@ -59,6 +59,9 @@ Let's start with the very basics. A typical application will - for the most past
 ### In the spirit of block, element, modifier
 Almost all of your ui components should be responsive. You should be able to place them in different sizes of responsive and non-responsive containers, without breaking their styles.
 
+### Integrate with ITCSS
+The class naming conventions of bumcss are a good fit for the general approach of ITCSS. You [can read more about it here](https://www.creativebloq.com/web-design/manage-large-css-projects-itcss-101517528).
+
 ## Order of styles: Simple UI Component Example
 The fundamental principle of bumcss is that all styles belonging to element should be grouped as closely together as possible.
 
@@ -73,7 +76,8 @@ Some Code says more than 100 lines of theory. So here is some practical example:
 ```scss
 .btn {
     /* Different states & variants of the element itself */
-    // NOTE: variant names should either always be adjectives (while element names, e.g. btn, should never be) or they should have a prefix like "_"
+    // NOTE: variant names should either always be adjectives (while element names,
+    // e.g. btn, should never be) or they should have a prefix like "_"
     &._primary-variant {}
     // camel cased and usually prefixed with "is" or "has" to distinguish them visually
     &.isVisible {}
@@ -121,7 +125,9 @@ Some Code says more than 100 lines of theory. So here is some practical example:
 ```
 
 ## CSS Specificity: Complex Component Example
-One of the main arguments for BEM is, that by using only a single class everywhere you won't run into problems where you need to go deeper and deeper to overwrite a style property (For more info on CSS specificity have a look [here](http://cssspecificity.com/) and [here](https://specificity.keegan.st/)). Let's explore how specificity will look like in a bumcss component.
+One of the main arguments for BEM is, that by using only a single class everywhere you won't run into problems where you need to go deeper and deeper to overwrite a style property (For more info on CSS specificity have a look [here](http://cssspecificity.com/) and [here](https://specificity.keegan.st/)).
+
+Let's explore how specificity will look like in a bumcss component.
 
 
 ```html
@@ -131,7 +137,7 @@ One of the main arguments for BEM is, that by using only a single class everywhe
     <tab-content></tab-content>
   </tab>
   <tab class="_accented">
-    <tab-heading class="_emphasized">heading <icon>icon</icon></tab-heading>
+    <tab-heading class="_empha">heading <icon>icon</icon></tab-heading>
     <tab-content class="_boxed"></tab-content>
   </tab>
 </tabs>
@@ -198,7 +204,7 @@ tab-heading {
 
     // parent variant S013
     // a bit ugly, but probably not needed very often
-    @at-root tab-heading._emphasized & {
+    @at-root tab-heading._empha & {
       transform: scale(2) rotate(13deg);
     }
 
@@ -250,7 +256,7 @@ Probably not a problems most of the time, as it's unlikely too have many combina
           </tab-content>
         </tab>
         <tab class="_accented">
-          <tab-heading class="_emphasized">heading <icon>icon</icon></tab-heading>
+          <tab-heading class="_empha">heading <icon>icon</icon></tab-heading>
           <tab-content class="_boxed">
             <h2>Features</h2>
             <ul class="features">
@@ -330,5 +336,8 @@ Personally not the biggest fan and I would recommend a healthy bit of scepticism
 
 ### Global Box Sizing
 Yes, please!
+
+
+
 
 
